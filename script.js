@@ -19,6 +19,7 @@ const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const resultBox = document.getElementById("result");
 const scoreText = document.getElementById("scoreText");
+const quizBox = document.getElementById("quiz");
 
 function loadQuestion() {
     const current = quizData[currentQuestion];
@@ -26,13 +27,15 @@ function loadQuestion() {
     optionsEl.innerHTML = "";
 
     current.options.forEach(option => {
-        const div = document.createElement("div");
-        div.classList.add("option");
-        div.innerHTML = `
+        const label = document.createElement("label");
+        label.classList.add("option");
+
+        label.innerHTML = `
             <input type="radio" name="answer" value="${option}">
             ${option}
         `;
-        optionsEl.appendChild(div);
+
+        optionsEl.appendChild(label);
     });
 }
 
@@ -53,7 +56,7 @@ nextBtn.addEventListener("click", () => {
     if (currentQuestion < quizData.length) {
         loadQuestion();
     } else {
-        document.getElementById("quiz").classList.add("hide");
+        quizBox.classList.add("hide");
         resultBox.classList.remove("hide");
         scoreText.innerText = `Your Score: ${score} / ${quizData.length}`;
     }
@@ -63,7 +66,7 @@ function restartQuiz() {
     currentQuestion = 0;
     score = 0;
     resultBox.classList.add("hide");
-    document.getElementById("quiz").classList.remove("hide");
+    quizBox.classList.remove("hide");
     loadQuestion();
 }
 
